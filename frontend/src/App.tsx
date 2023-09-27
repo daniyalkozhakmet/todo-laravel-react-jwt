@@ -16,7 +16,7 @@ function App() {
       <Navbar />
       <Routes>
         {/* подстановочный путь */}
-        <Route path="/home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/tasks/:id" element={<TaskSingle />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/tasks/create" element={<CreateTaskPage />} />

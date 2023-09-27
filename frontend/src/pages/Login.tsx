@@ -21,7 +21,7 @@ export const Login = () => {
   };
   useEffect(()=>{
     if(userState!=null){
-      navigate('/home')
+      navigate('/')
     }
   },[userState])
   return (

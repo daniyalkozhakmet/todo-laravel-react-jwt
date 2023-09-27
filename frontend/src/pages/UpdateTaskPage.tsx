@@ -34,7 +34,7 @@ const UpdateTaskPage = () => {
   }, [taskState]);
   useEffect(() => {
     if (success) {
-      navigate("/home");
+      navigate("/");
     }
   }, [success]);
   return (

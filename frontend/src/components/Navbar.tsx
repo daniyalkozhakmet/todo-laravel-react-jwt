@@ -15,12 +15,12 @@ const Navbar = () => {
 
   const handleLogout = () => {
     dispatch(logout(null));
-    navigate('/home')
+    navigate('/')
   };
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand" to="/">
           Alo
         </Link>
         <button

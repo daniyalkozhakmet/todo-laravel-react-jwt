@@ -20,7 +20,7 @@ export const Register = () => {
   };
   useEffect(()=>{
     if(userState!=null){
-      navigate('/home')
+      navigate('/')
     }
   },[userState])
   return (

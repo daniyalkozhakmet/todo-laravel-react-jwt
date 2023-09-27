@@ -19,7 +19,7 @@ const CreateTaskPage = () => {
   };
   useEffect(() => {
     if (success == true) {
-      navigate("/home");
+      navigate("/");
     }
   }, [success]);
   return (
