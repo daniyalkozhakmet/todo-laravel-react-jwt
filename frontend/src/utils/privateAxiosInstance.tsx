@@ -9,7 +9,7 @@ export const privateAxiosInstance = axios.create({
 
 privateAxiosInstance.interceptors.request.use(
   (config) => {
-    const token = JSON.parse(localStorage.getItem("user") || "null");
+    const token = JSON.parse(localStorage.getItem("token") || "null");
     if (token) {
       config.headers.Authorization = `Bearer ${token.token}`;
     }
@@ -22,30 +22,26 @@ privateAxiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-
     // If the error status is 401 and there is no originalRequest._retry flag,
     // it means the token has expired and we need to refresh it
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
-        const refreshToken = JSON.parse(localStorage.getItem("user") || 'null');
-        console.log(refreshToken.token)
-        const response = await axiosInstance.post("/auth/refresh", {
+        const refreshToken = JSON.parse(localStorage.getItem("user") || "null");
+        const response = await privateAxiosInstance.post("/auth/refresh", {
           headers: {
             Authorization: `Bearer ${refreshToken.token}`,
           },
         });
-        console.log('Reached')
-        const { token } = response.data;
-
-        localStorage.setItem("token", token);
+        const { access } = response.data;
+        localStorage.setItem("token", JSON.stringify({ token: access }));
 
         // Retry the original request with the new token
-        originalRequest.headers.Authorization = `Bearer ${token}`;
+        originalRequest.headers.Authorization = `Bearer ${access}`;
         return axios(originalRequest);
       } catch (error) {
-        console.log(error)
+        console.log(error);
         // Handle refresh token error or redirect to login
       }
     }

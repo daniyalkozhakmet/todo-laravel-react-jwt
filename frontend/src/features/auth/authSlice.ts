@@ -10,6 +10,7 @@ export const login = createAsyncThunk(
     try {
       const response = await axiosInstance.post("/auth/login", user);
       localStorage.setItem("user", JSON.stringify(response.data.data));
+      localStorage.setItem("token", JSON.stringify({token:response.data.data.token}));
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.errors);
@@ -22,6 +23,7 @@ export const register = createAsyncThunk(
     try {
       const response = await axiosInstance.post("/auth/register", user);
       localStorage.setItem("user", JSON.stringify(response.data.data));
+      localStorage.setItem("token", JSON.stringify({token:response.data.data.token}));
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data.errors);
@@ -34,6 +36,7 @@ export const logout = createAsyncThunk(
     try {
       const response = await privateAxiosInstance.post("/auth/logout");
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response.data);
